@@ -1,4 +1,4 @@
-# RSDF: Some functions to help Pandas DataFrames communicate to Redshift
+# RSDF
 
 Set of utils to connect Pandas' DataFrames and Redshift.
 

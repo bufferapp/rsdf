@@ -1,0 +1,4 @@
+smart_open
+pandas
+sqlalchemy
+numpy

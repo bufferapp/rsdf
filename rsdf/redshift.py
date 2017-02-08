@@ -8,6 +8,7 @@ import numpy as np
 import json
 from sqlalchemy import text
 from smart_open import smart_open
+from datetime import datetime
 
 
 def get_engine():
@@ -24,6 +25,13 @@ def get_engine():
     return create_engine(engine_string)
 
 
+class DateTimeEncoder(json.JSONEncoder):
+    def default(self, o):
+        if isinstance(o, datetime):
+            return o.isoformat()
+
+        return json.JSONEncoder.default(self, o)
+
 def prepare_dataframe_for_loading(dataframe):
     # do some cleanup
     #   - escape newlines
@@ -33,7 +41,7 @@ def prepare_dataframe_for_loading(dataframe):
     object_types = get_dataframe_column_object_types(dataframe)
     for c in object_types:
         dataframe[c] = dataframe[c].fillna('')
-        dataframe[c] = dataframe[c].map(lambda o: json.dumps(o) if not isinstance(o, str) else o)
+        dataframe[c] = dataframe[c].map(lambda o: json.dumps(o, cls=DateTimeEncoder) if not isinstance(o, str) else o)
         dataframe[c] = dataframe[c].map(lambda s: s.encode('unicode-escape').decode() if isinstance(s, str) else s)
         dataframe[c] = dataframe[c].str.replace('\|', '')
     return dataframe

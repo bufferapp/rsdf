@@ -63,7 +63,6 @@ def load_dataframe(dataframe, tablename, schemaname='public', columns=None, exis
     tfile = tempfile.NamedTemporaryFile(suffix='.bz2')
     dataframe.to_csv(tfile.name, header=False, index=False, sep='|', compression='bz2', na_rep='')
 
-    print('Uploading data to S3')
     with smart_open(tfile) as tout:
         with s3.open_buffer_data(s3_url, 'wb') as fout:
             fout.write(tout.read())
@@ -74,8 +73,6 @@ def load_dataframe(dataframe, tablename, schemaname='public', columns=None, exis
         columns = '()'.format(','.join(columns))
     credentials = 'aws_access_key_id={s3_access_key};aws_secret_access_key={s3_secret_key}'.format(**s3.creds)
     s3_bucket_url = 's3://buffer-data/{0}'.format(s3_url)
-
-    print("Creating or updating table {}".format(tablename))
 
     if table.exists():
         if exists == 'fail':
@@ -113,8 +110,6 @@ def load_dataframe(dataframe, tablename, schemaname='public', columns=None, exis
     with sa_engine.begin() as con:
         for stmt in queue:
             con.execute(stmt)
-
-    print('Done')
 
 
 def get_table_ddl(table_name, schema='public'):

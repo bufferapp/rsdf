@@ -28,7 +28,7 @@ def get_engine():
 class DateTimeEncoder(json.JSONEncoder):
     def default(self, o):
         if isinstance(o, datetime):
-            return str(o)
+            return o.strftime("%Y-%m-%d %H:%M:%S.%f")[:-3]
 
         return json.JSONEncoder.default(self, o)
 

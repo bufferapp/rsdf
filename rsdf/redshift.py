@@ -28,9 +28,10 @@ def get_engine():
 class DateTimeEncoder(json.JSONEncoder):
     def default(self, o):
         if isinstance(o, datetime):
-            return o.isoformat()
+            return str(o)
 
         return json.JSONEncoder.default(self, o)
+
 
 def prepare_dataframe_for_loading(dataframe):
     # do some cleanup

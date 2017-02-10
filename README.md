@@ -16,6 +16,7 @@ Make sure you have the next variables in your environment:
 - `REDSHIFT_ENDPOINT`
 - `REDSHIFT_DB_NAME`
 - `REDSHIFT_DB_PORT`
+- `REDSHIFT_COPY_S3_ROOT # Root s3 bucket name for loading data into Redshift`
 
 ```python
 from rsdf import redshift

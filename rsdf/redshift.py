@@ -66,7 +66,7 @@ def load_dataframe(dataframe, tablename, schemaname='public', columns=None, exis
     dataframe.to_csv(tfile.name, header=False, index=False, sep='|', compression='bz2', na_rep='')
 
     with smart_open(tfile) as tout:
-        with s3.open_buffer_data(s3_url, 'wb') as fout:
+        with s3.open(s3_url, 'wb') as fout:
             fout.write(tout.read())
 
     if columns is None:

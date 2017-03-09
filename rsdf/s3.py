@@ -4,7 +4,7 @@ from smart_open import smart_open
 env = {
     's3_access_key': os.environ.get('AWS_ACCESS_KEY_ID'),
     's3_secret_key': os.environ.get('AWS_SECRET_ACCESS_KEY'),
-    's3_root' : os.getenv('REDSHIFT_COPY_S3_ROOT')
+    's3_root': os.getenv('REDSHIFT_COPY_S3_ROOT')
 }
 
 

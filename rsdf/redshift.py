@@ -6,6 +6,7 @@ from . import s3
 import tempfile
 import numpy as np
 import json
+import pandas as pd
 from sqlalchemy import text
 from smart_open import smart_open
 from datetime import datetime
@@ -24,6 +25,11 @@ def get_engine():
 
     return create_engine(engine_string)
 
+def get_dataframe(query):
+    engine = redshift.get_engine()
+    df = pd.read_sql_query(query, engine)
+
+    return df
 
 def prepare_dataframe_for_loading(dataframe):
     # do some cleanup

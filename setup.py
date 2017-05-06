@@ -6,6 +6,7 @@ with open('README.md', encoding='utf-8') as f:
 with open('LICENSE', encoding='utf-8') as f:
     license = f.read()
 
+
 setup(
     name='rsdf',
     version='0.1.0',

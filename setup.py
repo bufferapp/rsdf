@@ -1,10 +1,10 @@
 from setuptools import setup, find_packages
 
 with open('README.md') as f:
-    readme = f.read()
+    readme = f.read(encoding='utf-8')
 
 with open('LICENSE') as f:
-    license = f.read()
+    license = f.read(encoding='utf-8')
 
 setup(
     name='rsdf',

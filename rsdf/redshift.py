@@ -159,3 +159,7 @@ def get_sa_table_for_dataframe(dataframe, tablename, schemaname):
                      dataframe, if_exists=True, index=False, dtype=dtypes)
 
     return table
+
+def execute(query):
+    engine = get_engine()
+    return engine.execute(query)

@@ -35,10 +35,16 @@ Load DataFrame into a Redshift table
 redshift.load_dataframe(df, 'events', exists='update', primary_key = ['id'])
 ```
 
+Execute a sql command, without expecting a DataFrame
+```python
+redshift.execute("drop table foobar")
+```
+
 Get the [DDL](https://en.wikipedia.org/wiki/Data_definition_language) for an existing table (as a string)
 ```python
 redshift.get_table_ddl('events')
 ```
+
 ## License
 
 MIT © Buffer

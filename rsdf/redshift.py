@@ -26,7 +26,7 @@ def get_engine():
     return create_engine(engine_string)
 
 def get_dataframe(query):
-    engine = redshift.get_engine()
+    engine = get_engine()
     df = pd.read_sql_query(query, engine)
 
     return df

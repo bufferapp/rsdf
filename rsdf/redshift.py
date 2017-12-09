@@ -79,7 +79,7 @@ def load_dataframe(dataframe, tablename, schemaname='public', columns=None, exis
         columns = ''
     else:
         columns = '()'.format(','.join(columns))
-    credentials = 'aws_access_key_id={s3_access_key};aws_secret_access_key={s3_secret_key}'.format(**s3.creds)
+    credentials = 'aws_access_key_id={s3_access_key};aws_secret_access_key={s3_secret_key}'.format(**s3.env)
     s3_bucket_url = 's3://buffer-data/{0}'.format(s3_url)
 
     if table.exists():

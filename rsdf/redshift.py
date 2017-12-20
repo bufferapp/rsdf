@@ -1,4 +1,5 @@
 import os
+import sqlalchemy
 from sqlalchemy import create_engine
 from sqlalchemy.types import VARCHAR
 from pandas.io.sql import SQLTable, pandasSQL_builder
@@ -117,7 +118,10 @@ def load_dataframe(dataframe, tablename, schemaname='public', columns=None, exis
     sa_engine = get_engine()
     with sa_engine.begin() as con:
         for stmt in queue:
-            con.execute(stmt)
+            try:
+                con.execute(stmt)
+            except Exception as e:
+                print('Error executing {}...'.format(stmt[:10]))
 
 
 def get_table_ddl(table_name, schema='public'):

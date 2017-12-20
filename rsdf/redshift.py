@@ -1,5 +1,4 @@
 import os
-import sqlalchemy
 from sqlalchemy import create_engine
 from sqlalchemy.types import VARCHAR
 from pandas.io.sql import SQLTable, pandasSQL_builder

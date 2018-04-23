@@ -1,0 +1,17 @@
+[[source]]
+url = "https://pypi.python.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+"boto3" = "*"
+pandas = "*"
+sqlalchemy = "*"
+"psycopg2-binary" = "*"
+sqlalchemy-redshift = "*"
+
+[dev-packages]
+jupyter = "*"
+
+[requires]
+python_version = "3.6"

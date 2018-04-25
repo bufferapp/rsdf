@@ -63,11 +63,12 @@ def to_redshift(self, table_name, s3_bucket, s3_key, engine=None, schema=None,
             queue = [
                 'drop table {};'.format(full_table_name),
                 table.sql_schema() + ";",
-                generate_copy_command(full_table_name, s3_bucket, s3_key,
-                                      aws_access_key_id, aws_secret_access_key, compress)
+                CopyCommand(to=table, data_location='s3://{}/{}'.format(s3_bucket, s3_key), access_key_id=aws_access_key_id,
+                            secret_access_key=aws_secret_access_key, format='CSV', compression='GZIP' if compress else None)
             ]
         elif if_exists == 'update':
             staging_table = '{}_staging'.format(table_name)
+
             if not primary_key:
                 raise ValueError(
                     "Expected a primary key to update existing table")
@@ -77,8 +78,8 @@ def to_redshift(self, table_name, s3_bucket, s3_key, engine=None, schema=None,
                 'drop table if exists {};'.format(staging_table),
                 'create temporary table {} (like {});'.format(
                     staging_table, full_table_name),
-                generate_copy_command(staging_table, s3_bucket, s3_key,
-                                      aws_access_key_id, aws_secret_access_key, compress),
+                CopyCommand(to=table, data_location='s3://{}/{}'.format(s3_bucket, s3_key), access_key_id=aws_access_key_id,
+                            secret_access_key=aws_secret_access_key, format='CSV', compression='GZIP' if compress else None),
                 'delete from {full_table_name} where {primary_key} in (select {primary_key} from {staging_table});'.format(
                     full_table_name=full_table_name, primary_key=primary_key, staging_table=staging_table),
                 'insert into {} (select * from {});'.format(full_table_name,
@@ -92,7 +93,7 @@ def to_redshift(self, table_name, s3_bucket, s3_key, engine=None, schema=None,
                  generate_copy_command(full_table_name, s3_bucket, s3_key, aws_access_key_id, aws_secret_access_key, compress)]
 
     # Save DataFrame to S3
-    self.to_s3(bucket=s3_bucket, key=s3_kebucket=s3_bucket, y, index=index, compress=compress)
+    self.to_s3(bucket=s3_bucket, key=s3_key, index=index, compress=compress)
 
     # Execute queued statements
     engine = _engine_builder(engine)

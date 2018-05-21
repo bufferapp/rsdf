@@ -1,27 +1,22 @@
-from setuptools import setup, find_packages
+# !/usr/bin/env python
 
-with open('README.md', encoding='utf-8') as f:
-    readme = f.read()
-
-with open('LICENSE', encoding='utf-8') as f:
-    license = f.read()
-
+from setuptools import setup
 
 setup(
     name='rsdf',
-    version='0.1.0',
-    description='Set of utils to connect Pandas and Redshift',
-    long_description=readme,
+    packages=['rsdf'],
+    version='0.9.0',
+    description='Redshift interface to Pandas DataFrames',
     author='Michael Erasmus',
     author_email='michael@buffer.com',
     url='https://github.com/bufferapp/rsdf',
-    license=license,
+    license='MIT',
+    keywords=['redshift', 'pandas', 'upsert'],
     install_requires=[
-        'smart_open',
+        'boto3',
+        'psycopg2-binary',
         'pandas',
         'sqlalchemy',
-        'numpy',
-        'psycopg2'
-    ],
-    packages=find_packages(exclude=('tests', 'docs'))
+        'sqlalchemy-redshift'
+    ]
 )

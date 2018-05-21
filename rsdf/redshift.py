@@ -16,20 +16,6 @@ def generate_redshift_engine_string():
     )
 
 
-def generate_copy_command(full_table_name, s3_bucket, s3_key,
-                          aws_access_key_id, aws_secret_access_key,
-                          compress=True):
-
-    return """copy {full_table_name} from '{s3_url}'
-credentials 'aws_access_key_id={key};aws_secret_access_key={secret}' {gzip}
-csv;""".format(
-        full_table_name=full_table_name,
-        s3_url='s3://{}/{}'.format(s3_bucket, s3_key),
-        key=aws_access_key_id,
-        secret=aws_secret_access_key,
-        gzip="GZIP" if compress else "")
-
-
 def to_redshift(self, table_name, s3_bucket, s3_key, engine=None, schema=None,
                 if_exists='fail', index=False, compress=True, primary_key=None,
                 aws_access_key_id=None, aws_secret_access_key=None, **kwargs):
@@ -90,7 +76,8 @@ def to_redshift(self, table_name, s3_bucket, s3_key, engine=None, schema=None,
             raise ValueError("{} is not valid for if_exists".format(if_exists))
     else:
         queue = [table.sql_schema() + ";",
-                 generate_copy_command(full_table_name, s3_bucket, s3_key, aws_access_key_id, aws_secret_access_key, compress)]
+                 CopyCommand(to=table, data_location='s3://{}/{}'.format(s3_bucket, s3_key), access_key_id=aws_access_key_id,
+                             secret_access_key=aws_secret_access_key, format='CSV', compression='GZIP' if compress else None)]
 
     # Save DataFrame to S3
     self.to_s3(bucket=s3_bucket, key=s3_key, index=index, compress=compress)

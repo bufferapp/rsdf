@@ -8,7 +8,7 @@ def generate_redshift_engine_string():
     redshift_user = os.getenv('REDSHIFT_USER')
     redshift_password = os.getenv('REDSHIFT_PASSWORD')
     redshift_endpoint = os.getenv('REDSHIFT_ENDPOINT')
-    redshift_db_port = int(os.getenv('REDSHIFT_DB_PORT'), 0)
+    redshift_db_port = int(os.getenv('REDSHIFT_DB_PORT', 0))
 
     return "postgres+psycopg2://{}:{}@{}:{}/{}".format(
         redshift_user, redshift_password, redshift_endpoint,

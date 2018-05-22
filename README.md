@@ -1,5 +1,9 @@
 # RSDF
 
+[![Build Status](https://travis-ci.com/bufferapp/rsdf.svg?branch=master)](https://travis-ci.com/bufferapp/rsdf)
+[![PyPI version](https://badge.fury.io/py/rsdf.svg)](https://badge.fury.io/py/rsdf)
+[![License](https://img.shields.io/github/license/mashape/apistatus.svg)](LICENSE)
+
 Set of utils to connect Pandas DataFrames and Redshift. This module will add a
 new function to the `DataFrame` object. Inspired by [josepablog gist](https://gist.github.com/josepablog/1ce154a45dc20348b6718804ac8ad0a5).
 

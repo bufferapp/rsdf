@@ -86,5 +86,4 @@ def to_redshift(self, table_name, s3_bucket, s3_key, engine=None, schema=None,
     engine = _engine_builder(engine)
     with engine.begin() as con:
         for stmt in queue:
-            print(stmt)
             con.execute(stmt)

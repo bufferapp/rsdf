@@ -26,17 +26,17 @@ import rsdf
 
 engine_string = 'redshift://user:password@endpoint:port/db'
 
-users = pd.read_sql_query("select * from users limit 10", engine_string)
+users = pd.read_sql_query('select * from users limit 10', engine_string)
 
 users['money'] = users['money'] * 42
 
 # Write it back to Redshift
 users.to_redshift(
-    table_name="users",
+    table_name='users',
     schema='public',
     engine=engine_string,
-    s3_bucket="users-data",
-    s3_key="rich_users.gzip",
+    s3_bucket='users-data',
+    s3_key='rich_users.gzip',
     if_exists='update',
     primary_key='id'
 )

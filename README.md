@@ -34,6 +34,7 @@ users['money'] = users['money'] * 42
 users.to_redshift(
     table_name="users",
     schema='public',
+    engine=engine_string,
     s3_bucket="users-data",
     s3_key="rich_users.gzip",
     if_exists='update',
@@ -41,8 +42,7 @@ users.to_redshift(
 )
 ```
 
-The `rsdf` module will try to figure out the engine string if you don't provide
-one. To do that it'll use the following environment variables:
+Alternatively, if no `engine` is provided, the `rsdf` module will try to figure out the engine string from the following environment variables:
 
 - `REDSHIFT_USER`
 - `REDSHIFT_PASSWORD`

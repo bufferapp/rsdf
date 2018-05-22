@@ -1,22 +1,31 @@
-import os
-from smart_open import smart_open
+import boto3
+from io import StringIO
+from io import BytesIO
+from gzip import GzipFile
 
-env = {
-    's3_access_key': os.environ.get('AWS_ACCESS_KEY_ID'),
-    's3_secret_key': os.environ.get('AWS_SECRET_ACCESS_KEY'),
-    's3_root': os.getenv('REDSHIFT_COPY_S3_ROOT')
-}
+s3 = boto3.client('s3')
 
 
-def get_buffer_data_url(with_creds=False):
-    if with_creds:
-        return 's3://{s3_access_key}:{s3_secret_key}@{s3_root}'.format(**env)
-    else:
-        return 's3://{s3_root}'.format(**env)
+def gzip_stringio(input_object):
+    compressed_object = BytesIO()
+
+    input_object.seek(0)
+
+    with GzipFile(fileobj=compressed_object, mode='wb') as gzf:
+        gzf.write(input_object.getvalue().encode('utf-8'))
+
+    compressed_object.seek(0)
+
+    return compressed_object
 
 
-def open(path, mode='rb', **kw):
-    base_url = get_buffer_data_url(with_creds=True)
+def to_s3(self, bucket, key, compress=True, index=False,
+          header=None, **kwargs):
+    df_csv_object = StringIO()
 
-    s3_url = '{base_url}/{path}'.format(**locals())
-    return smart_open(s3_url, mode, **kw)
+    self.to_csv(df_csv_object, index=index, header=header, **kwargs)
+
+    if compress:
+        df_csv_object = gzip_stringio(df_csv_object)
+
+    return s3.upload_fileobj(df_csv_object, bucket, key)

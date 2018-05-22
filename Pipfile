@@ -1,0 +1,18 @@
+[[source]]
+url = "https://pypi.python.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+boto3 = "*"
+psycopg2-binary = "*"
+pandas = "*"
+sqlalchemy = "*"
+sqlalchemy-redshift = "*"
+
+[dev-packages]
+pytest = "*"
+"rsdf" = {path = ".", editable = true}
+
+[requires]
+python_version = "3.6"

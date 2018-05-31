@@ -15,6 +15,12 @@ To install `rsdf`, simply use pip:
 $ pip install rsdf
 ```
 
+If you were using the older version, you can also install it with `pip`:
+
+```bash
+$ pip install git+git://github.com/bufferapp/rsdf.git@d1a5feca220cef9ba7da16da57a746dfb24ee8d7
+```
+
 ## Usage
 
 Once `rdsf` is imported, the `DataFrame` objects will have new functions:

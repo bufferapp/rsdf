@@ -53,11 +53,14 @@ def to_redshift(
         index=index,
     )
 
+    def quote(s):
+        return '"' + str(s) + '"'
+
     # Full table name with schema
     if schema:
-        full_table_name = str(schema) + "." + str(table_name)
+        full_table_name = quote(schema) + "." + quote(table_name)
     else:
-        full_table_name = str(table_name)
+        full_table_name = quote(table_name)
 
     # Check table
     if table.exists():

@@ -5,7 +5,7 @@ from setuptools import setup
 setup(
     name="rsdf",
     packages=["rsdf"],
-    version="0.9.1",
+    version="0.9.2",
     description="Redshift interface to Pandas DataFrames",
     author="Michael Erasmus",
     author_email="michael@buffer.com",
